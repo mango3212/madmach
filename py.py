@@ -1,5 +1,7 @@
 import random
-
+import datetime
+import time
+start_time = time.time()
 #madmah proyekt.
 
 #                      _          _              _       _
@@ -45,7 +47,33 @@ def replace(char):
         if i == char:
             msword[j] = char
         j+=1
-
+#convert sec to time
+def get_sec2time(t):
+    return str(datetime.timedelta(seconds=t))
+    
+#check best time
+def checkbesttime(t):
+    arr = []
+    with open("score.txt", "a") as f:
+        with open("score.txt", "r") as fr:
+            lines = fr.readlines()
+            for i in lines:
+                arr.append(i.replace("\n",""))
+            if int(arr[0]) < t:
+                return False
+            else:
+                with open("score.txt", "w") as bdfg:
+                    pass
+                f.write(str(t))
+                return True
+#save best name
+def savebestname(name, t):
+    if checkbesttime(t):
+        with open('names.txt', 'a') as mainf:
+            with open("names.txt", "w") as f:
+                pass   
+            mainf.write(str(name))
+username = input("what is your name     :")
 randomword = get_word()
 msword = []
 trys = 0
@@ -63,4 +91,6 @@ while "_" in msword:
 
     #updating th trys couters
     trys +=1
-print(f'you won,\nword thet you gess was:  "{randomword}".')
+t = int(time.time() - start_time)
+savebestname(username, t)
+print(f'you won,\nword thet you gess was:  "{randomword}".\ntime:   {get_sec2time(t)}')
